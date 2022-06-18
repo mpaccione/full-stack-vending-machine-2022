@@ -1,0 +1,41 @@
+Background
+
+You’ve been contracted by ColaCo to build a virtual vending machine for their new line of virtual sodas.  Virtual sodas, for “reasons”, are hard to create so currently there are limited quantities and varieties available.  At the time of launch, there will be 4 different varieties of virtual soda that your machine needs to vend, but the engineering team is working hard to launch additional flavors later this year. Each soda has a unique cost and available quantity.  ColaCo’s sales team has tentatively set these prices but might need to adjust them based on how well the product sells.  Marketing has also requested the ability to change the prices during set promotional windows.
+
+Requirements
+
+ColaCo would like you to build a webpage that acts as the UI for customers to buy the aforementioned virtual sodas.  They would like it to look and feel as much like a traditional soda vending machine.  When the customer purchases a soda, the browser will download a JSON soda file.  The vending machine needs to generate the correct soda file based off the purchase.  Your vending machine needs to have some representation of money.
+
+You will also need to build an HTTP API that allows an admin to check the status of the vending machine and re-stock it.  As mentioned, virtual soda is hard to create. This limits the quantities available to re-stock, so you can’t assume they can re-stock the entire inventory all at once.  You should also make sure there is an easy way to update the prices.
+
+You must create the backend using NodeJS, Python or Go.  You can use HTML, CSS, and or any JavaScript framework/library (Angular, React, Vue, etc.) for the frontend.  Additionally, you can leverage any tools, technologies, or libraries if they are freely available for anyone to download and install.  To be clear, Itential’s stack is currently NodeJS, Python, very limited Java and React as our UI library.
+
+A fully stocked vending machine should contain the entire virtual soda lineup.  The price and available quantity are provided with each soda.
+
+Current Virtual Soda lineup
+
+Product Name: Fizz
+Description: An effervescent fruity experience with hints of grape and coriander.
+Cost: 1 dollar US
+Maximum Quantity available to vend: 100
+
+Product Name: Pop
+Description: An explosion of flavor that will knock your socks off!
+Cost: 1 dollar US
+Maximum Quantity available to Vend: 100
+
+Product Name: Cola
+Description: A basic no nonsense cola that is the perfect pick me up for any occasion.
+Cost: 1 dollar US
+Maximum Quantity available to vend: 200
+
+Product Name: Mega Pop
+Description: Not for the faint of heart.  So flavorful and so invigorating, it should probably be illegal.
+Cost: 1 dollar US
+Maximum Quantity available to vend: 50
+
+Expectations
+
+You have one week to build as much of a prototype as possible based on the background and requirements.  We don’t expect you to deliver a production grade solution.  The requirements intentionally leave room for your own interpretation, so feel free to have fun with it.
+
+You need to share your solution with us in a GitHub repository.  Make sure you create a README.md file in the root of the project that describes how to setup and run your solution.  It should also briefly describe how to use your interface and API routes.
