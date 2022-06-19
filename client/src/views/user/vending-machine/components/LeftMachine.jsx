@@ -1,34 +1,89 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
-const MachineFrame = styled.div`
-    background-color: gray;
-    height: 600px;
-    width: 400px;
-`
+import { setSelectedId } from "../../../../redux/sodaSlice";
+import Soda from "./Soda";
+
+const Frame = styled.div`
+  background: ${props => props.theme.metalGradient1};
+  background-color: gray;
+  border-left: darkgray 30px solid;
+  border-right: darkgray 30px solid;
+  padding: 50px;
+  position: relative;
+  height: calc(100% - 100px);
+  width: 70%;
+`;
+
 const SodaContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-`
+  display: flex;
+  background-color: black;
+  border-radius: 15px;
+  flex-wrap: wrap;
+  height: calc(100% - 150px);
+  justify-content: flex-start;
+  padding: 60px 15px 15px 15px;
+`;
 
-const SodaImage = styled.div`
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-`
+const SodaDescription = styled.div`
+  animation: popIn 5s infinite;
+  bottom: 16%;
+  color: green;
+  position: absolute;
+  left: 0px;
+  text-align: center;
+  transition: 0.5s all;
+  width: 100%;
 
-const Soda = ({ img }) => (
-    <SodaImage style={{backgroundImage: `url(${img})`}} />
-)
+  @keyframes popIn {
+    0% {
+      font-size: 1.05em;
+    }
+    50% {
+      font-size: 1.2em;
+    }
+    100% {
+      font-size: 1.05em;
+    }
+  }
+`;
 
-const LeftMachine = ({ sodas }) => {
-    return (
-        <MachineFrame>
-            <SodaContainer>
-                {sodas.map(s => <Soda img={s.img} />)}
-            </SodaContainer>
-        </MachineFrame>
-    )
-}
+const SodaDispenser = styled.div`
+  background: ${props => props.theme.shadowGradient};
+  background-color: black;
+  border-radius: 15px;
+  height: 80px;
+  margin: auto;
+  margin-top: 25px;
+  width: 50%;
+`;
 
-export default LeftMachine
+const LeftMachine = () => {
+  const { selectedId, sodas } = useSelector(state => state.soda);
+  const dispatch = useDispatch();
+
+  return (
+    <Frame>
+      <SodaContainer>
+        {sodas.map((s) => (
+          <Soda
+            {...{ ...s, selectedId }}
+            key={s.id}
+            onClick={() => {
+              dispatch(setSelectedId(s.id));
+            }}
+          />
+        ))}
+        <SodaDescription>
+          {selectedId !== null
+            ? sodas.find((s) => s.id === selectedId - 1).description
+            : ""}
+        </SodaDescription>
+      </SodaContainer>
+      <SodaDispenser />
+    </Frame>
+  );
+};
+
+export default LeftMachine;

@@ -1,10 +1,11 @@
 import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
-import styled from "styled-components"
+import styled, { ThemeProvider } from "styled-components"
 
 // import { AdminLogin, AdminPanel } from "./views/admin"
 import { VendingMachine } from "./views/user"
+import theme from "./theme";
 
 const AppContainer = styled.div`
   height: 100%;
@@ -35,15 +36,17 @@ function App() {
   }, [])
 
   return (
-    <AppContainer>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<VendingMachine />} />
-          {/* <Route path="/admin-login" element={<AdminLogin />} />
+    <ThemeProvider theme={theme}>
+      <AppContainer>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<VendingMachine />} />
+            {/* <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/admin-panel" element={<ProtectedAdminPanel {...userData} />} /> */}
-        </Routes>
-      </BrowserRouter>
-    </AppContainer>
+          </Routes>
+        </BrowserRouter>
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 
