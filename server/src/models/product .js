@@ -4,27 +4,27 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
-            type: DataTypes.Integer,
+            type: DataTypes.INTEGER,
         },
         currentInventory: {
             default: 0,
-            type: DataTypes.Integer
+            type: DataTypes.INTEGER
         },
         description: {
-            type: DataTypes.String
+            type: DataTypes.STRING
         },
         maximumInventory: {
-            type: DataTypes.Integer
+            type: DataTypes.INTEGER
         },
         name: {
-            type: DataTypes.String
+            type: DataTypes.STRING
         },
         price: {
-            type: DataTypes.Float
+            type: DataTypes.FLOAT
         }
     })
     Product.associate = function(models) {
-        Product.hasMany(models.Promotions)
+        Product.hasMany(models.Promotion)
     }
     return Product
 }

@@ -4,16 +4,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
-            type: DataTypes.Integer,
+            type: DataTypes.INTEGER,
         },
         discount: {
-            type: DataTypes.Float
+            type: DataTypes.FLOAT
         },
         endDate: {
-            type: DataTypes.Date
+            type: DataTypes.DATE
         },
         startDate: {
-            type: DataTypes.Date
+            type: DataTypes.DATE
         }
     })
     Promotion.associate = function(models) {

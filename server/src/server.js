@@ -13,6 +13,11 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors())
 app.use((req, res, next) => {
+    // dev testing
+    if (req.path = '/ping') {
+        return next()
+    }
+
     // query string methods
     if (req.method === 'GET') {
         if (!req.query || !req.query.id) {
