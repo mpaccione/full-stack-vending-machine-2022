@@ -66,18 +66,18 @@ const LeftMachine = () => {
   return (
     <Frame>
       <SodaContainer>
-        {sodas.map((s) => (
+        {sodas && sodas.map((s, idx) => (
           <Soda
             {...{ ...s, selectedId }}
-            key={s.id}
+            key={idx}
             onClick={() => {
-              dispatch(setSelectedId(s.id));
+              dispatch(setSelectedId(s.productId));
             }}
           />
         ))}
         <SodaDescription>
           {selectedId !== null
-            ? sodas.find((s) => s.id === selectedId - 1).description
+            ? sodas.find((s) => s.productId === selectedId - 1)?.description
             : ""}
         </SodaDescription>
       </SodaContainer>

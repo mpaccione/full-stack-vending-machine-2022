@@ -1,0 +1,1 @@
+export { AdminPanel } from './components/index'

@@ -1,4 +1,4 @@
-const { Promotion } = require('../models')
+const Promotion = require('../models/promotion')
 const { catchErr } = require('../utils')
 
 const createPromotion = async (req, res) => {
@@ -7,7 +7,7 @@ const createPromotion = async (req, res) => {
         const newPromotion = await new Promotion({ discount, endDate, startDate }).save()
         res.status(200).json(newPromotion)
     } catch (err) {
-        return catchErr(err)
+        return catchErr(err, res)
     }
 }
 
@@ -16,7 +16,7 @@ const deletePromotion = async (req, res) => {
         const deletePromotion = await Promotion.destroy({ where: { promotionId: req.body.id } })
         res.status(200).json(deletePromotion)
     } catch (err) {
-        return catchErr(err)
+        return catchErr(err, res)
     }
 }
 
@@ -25,7 +25,7 @@ const getPromotions = async (req, res) => {
         const Promotions = await Promotion.findAll()
         res.status(200).json(Promotions)
     } catch (err) {
-        return catchErr(err)
+        return catchErr(err, res)
     }
 }
 
@@ -35,7 +35,7 @@ const updatePromotion = async (req, res) => {
         const updatedPromotion = await Promotion.update({ discount, endDate, startDate }, { where: { promotionId } })
         res.status(200).json(updatedPromotion)
     } catch (err) {
-        return catchErr(err)
+        return catchErr(err, res)
     }
 }
 

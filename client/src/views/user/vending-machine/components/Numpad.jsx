@@ -54,7 +54,7 @@ const NumpadWrapper = styled.div`
 
 const audio = new Audio(beep);
 
-const Numpad = ({ buySoda, chosenId }) => {
+const Numpad = ({ buySoda, selectedId }) => {
   const dispatch = useDispatch()
 
   return (
@@ -62,10 +62,11 @@ const Numpad = ({ buySoda, chosenId }) => {
       <NumpadWrapper>
         {new Array(9).fill(null).map((falsey, idx) => (
           <Num
+            key={idx}
             onClick={() => {
               audio.play();
-              chosenId !== undefined
-                ? dispatch(setSelectedId(chosenId.concat(idx + 1)))
+              selectedId !== null
+                ? dispatch(setSelectedId(selectedId.concat(idx + 1)))
                 : dispatch(setSelectedId((idx + 1).toString()));
             }}
           >
@@ -76,7 +77,7 @@ const Numpad = ({ buySoda, chosenId }) => {
       <NumpadButton
         onClick={() => {
           audio.play();
-          dispatch(setSelectedId());
+          dispatch(setSelectedId(null));
         }}
       >
         Clear

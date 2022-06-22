@@ -43,9 +43,9 @@ const SodaQuantity = styled.label`
   font-weight: bolder;
   justify-content: center;
   height: 30px;
-  position: absolute;
+  position: relative;
   left: calc(50% - 35px);
-  top: -45px;
+  top: 15px;
   width: 70px;
 `
 
@@ -62,26 +62,26 @@ const generateQuantityColor = (current, max) => {
 };
 
 const Soda = ({
-  currentQuantity,
-  id,
-  img,
-  maxQuantity,
+  currentInventory,
+  productId,
+  image,
+  maximumInventory,
   name,
   price,
   onClick,
   selectedId,
 }) => (
-  <SodaItem className={id === selectedId - 1 ? "selected" : ""} onClick={onClick}>
-    <SodaImage style={{ backgroundImage: `url(${img})` }} />
+  <SodaItem className={productId == selectedId ? "selected" : ""} onClick={onClick}>
+    <SodaImage style={{ backgroundImage: `url('${image}')` }} />
     <SodaQuantity
       style={{
-        backgroundColor: generateQuantityColor(currentQuantity, maxQuantity),
+        backgroundColor: generateQuantityColor(currentInventory, maximumInventory),
       }}
     >
-      {currentQuantity}/{maxQuantity}
+      {currentInventory}/{maximumInventory}
     </SodaQuantity>
     <SodaLabel>
-      <span>#{id + 1}</span>
+      <span>#{productId}</span>
       <br />
       <span>${price}.00</span>
     </SodaLabel>

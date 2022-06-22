@@ -1,16 +1,30 @@
-import React from "react";
-import { Container } from "semantic-ui-react";
+import React, { useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 
+import { getInventory } from "./actions";
 import LeftMachine from "./components/LeftMachine";
 import RightMachine from "./components/RightMachine";
 
-const VendingContainer = styled(Container)`
+const VendingContainer = styled.div`
     display: flex;
     height: 100%;
 `
 
 const VendingMachine = () => {
+  const { sodas } = useSelector(state => state.soda)
+  const dispatch = useDispatch()
+  
+  const getSodas = useCallback(() => {
+    dispatch(getInventory())
+  }, [])
+
+  useEffect(() => {
+    if (!sodas) {
+      getSodas();
+    }
+  }, [])
+
   return (
     <VendingContainer>
       <LeftMachine />

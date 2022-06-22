@@ -2,7 +2,7 @@
     "development": {
         "database": "vending_machine",
         "dialect": "mysql",
-        "host": "127.0.0.1",
+        "host": "db",
         "password": "root",
         "username": "root"
     },

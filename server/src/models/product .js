@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Product = sequelize.define('Product', {
+    const Product = sequelize.define('Products', {
         productId: {
             allowNull: false,
             autoIncrement: true,
@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
         description: {
             type: DataTypes.STRING
         },
+        image: {
+            get() {
+              return this.getDataValue('image').toString()
+            },
+            type: DataTypes.BLOB('medium')
+        },
         maximumInventory: {
             type: DataTypes.INTEGER
         },
@@ -24,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     })
     Product.associate = function(models) {
-        Product.hasMany(models.Promotion)
+        Product.hasMany(models.Promotions)
     }
     return Product
 }

@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Promotion = sequelize.define('Promotion', {
+    const Promotion = sequelize.define('Promotions', {
         promotionId: {
             allowNull: false,
             autoIncrement: true,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     })
     Promotion.associate = function(models) {
-        Promotion.belongsTo(models.Product)
+        Promotion.belongsTo(models.Products)
     }
     return Promotion
 }

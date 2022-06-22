@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { mockSodas } from "../utils/mock";
+// import { mockSodas } from "../utils/mock";
 
 const initialState = {
   selectedId: null,
-  // sodas: null,
-  sodas: mockSodas,
+  sodas: null,
 };
 
 const sodaSlice = createSlice({
@@ -14,7 +13,7 @@ const sodaSlice = createSlice({
     setSelectedId: (state, action) => {
       state.selectedId = action.payload
     },
-    setSoda: (state, action) => {
+    setSodas: (state, action) => {
       state.sodas = action.payload
     },
   },
@@ -22,6 +21,6 @@ const sodaSlice = createSlice({
 
 export const {
   setSelectedId,
-  setSoda,
+  setSodas,
 } = sodaSlice.actions;
 export default sodaSlice.reducer;

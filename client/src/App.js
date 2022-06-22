@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components"
 
-// import { AdminLogin, AdminPanel } from "./views/admin"
+import { AdminPanel } from "./views/admin"
 import { VendingMachine } from "./views/user"
 import theme from "./theme";
 
@@ -13,18 +13,19 @@ const AppContainer = styled.div`
 `
 
 const ProtectedRoute = ({ children, jwt }) => {
-  if (!jwt) {
+  // if (!jwt) {
+  if (false/* Mock */) { 
     return <Navigate to="/" replace />
   }
 
   return children;
 }
 
-// const ProtectedAdminPanel = ({ userData }) => (
-//   <ProtectedRoute {...userData}>
-//     <AdminPanel />
-//   </ProtectedRoute>
-// )
+const ProtectedAdminPanel = ({ userData }) => (
+  <ProtectedRoute {...userData}>
+    <AdminPanel />
+  </ProtectedRoute>
+)
 
 function App() {
   const { userData } = useSelector(state => state.user)
@@ -41,8 +42,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<VendingMachine />} />
-            {/* <Route path="/admin-login" element={<AdminLogin />} />
-          <Route path="/admin-panel" element={<ProtectedAdminPanel {...userData} />} /> */}
+            <Route path="/admin" element={<ProtectedAdminPanel {...userData} />} />
           </Routes>
         </BrowserRouter>
       </AppContainer>

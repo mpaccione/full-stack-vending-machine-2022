@@ -1,12 +1,12 @@
 import axios from "axios";
 import store from "../redux/store";
-import { setErrorMessage, clearErrorMessage } from "../redux/settingSlice";
+import { setErrorMessage, clearErrorMessage } from "../redux/userSlice";
 
 
 const docker = "http://localhost:5001"
 
 const api = axios.create({
-    baseURL: `${docker}/dev/api/`,
+    baseURL: `${docker}/api/v1`,
     headers: {
         "Content-Type": "application/json",
     },

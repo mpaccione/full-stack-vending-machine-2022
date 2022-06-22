@@ -22,16 +22,19 @@ DROP DATABASE IF EXISTS `vending_machine`;
 CREATE DATABASE `vending_machine`;
 USE `vending_machine`;
 
-DROP TABLE IF EXISTS `product`;
+DROP TABLE IF EXISTS `Products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `product` (
+CREATE TABLE `Products` (
   `productId` int NOT NULL AUTO_INCREMENT,
+  `createdAt` date DEFAULT NULL,
   `currentInventory` int DEFAULT '0',
   `description` varchar(200) DEFAULT NULL,
+  `image` mediumblob default null,
   `maximumInventory` int DEFAULT '100',
   `name` varchar(50) DEFAULT NULL,
   `price` float DEFAULT NULL,
+  `updatedAt` date DEFAULT NULL,
   PRIMARY KEY (`productId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15916 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -41,14 +44,16 @@ CREATE TABLE `product` (
 -- Table structure for table `promotion`
 --
 
-DROP TABLE IF EXISTS `promotion`;
+DROP TABLE IF EXISTS `Promotions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `promotion` (
+CREATE TABLE `Promotions` (
   `promotionId` int NOT NULL AUTO_INCREMENT,
+  `createdAt` date DEFAULT NULL,
   `discount` float DEFAULT '0',
   `endDate` date DEFAULT NULL,
   `startDate` date DEFAULT NULL,
+  `updatedAt` date DEFAULT NULL,
   PRIMARY KEY (`promotionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15912 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

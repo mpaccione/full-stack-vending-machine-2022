@@ -1,8 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const fs = require('fs')
+const path = require('path')
 
 const routes = require('./routes')
+const { sequelize } = require('./models')
 
 const app = express()
 const BASE_PATH = '/api/v1'
@@ -16,13 +19,6 @@ app.use((req, res, next) => {
     // dev testing
     if (req.path = '/ping') {
         return next()
-    }
-
-    // query string methods
-    if (req.method === 'GET') {
-        if (!req.query || !req.query.id) {
-            return res.status(400).json({ message: 'Missing ID' })
-        }
     }
 
     // body methods
@@ -44,7 +40,35 @@ app.get('/ping', (req, res) => {
     res.send('pong!');
 });
 
-// server
-app.listen(PORT, () => console.log(`Server Listening at http://localhost:${PORT}`))
+// db
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
+
+sequelize.sync()
+    .then(() => {
+        const mockSodas = require('./mock')
+        // seed blob images
+        mockSodas.forEach(({ id, img, name }) => {
+            sequelize.models.Products.update(
+                { image: img },
+                { where: { productId: id }},
+            ).then(image => {
+                try {
+                    console.log(`Base64 ${id}:${name.toUpperCase()} Data Seeded`)
+                } catch (e) {
+                    console.log(e);
+                }
+            })
+        })
+
+        // server
+        app.listen(PORT, () => console.log(`Server Listening at http://localhost:${PORT}`))
+    })
 
 exports.app = { app, BASE_PATH }

@@ -1,4 +1,4 @@
-export const mockSodas = [{
+module.exports = mockSodas = [{
     id: 15912,
     name: "Cola",
     price: 1,

@@ -1,5 +1,7 @@
-const { Product } = require('../models')
+const { Products } = require('../models')
 const { catchErr } = require('../utils')
+
+
 
 const createProduct = async (req, res) => {
     try {
@@ -9,7 +11,7 @@ const createProduct = async (req, res) => {
         }).save()
         res.status(200).json(newProduct)
     } catch (err) {
-        return catchErr(err)
+        return catchErr(err, res)
     }
 }
 
@@ -18,16 +20,16 @@ const deleteProduct = async (req, res) => {
         const deleteProduct = await Product.destroy({ where: { productId: req.body.id } })
         res.status(200).json(deleteProduct)
     } catch (err) {
-        return catchErr(err)
+        return catchErr(err, res)
     }
 }
 
 const getProducts = async (req, res) => {
     try {
-        const products = await Product.findAll()
+        const products = await Products.findAll()
         res.status(200).json(products)
     } catch (err) {
-        return catchErr(err)
+        return catchErr(err, res)
     }
 }
 
@@ -39,7 +41,7 @@ const updateProduct = async (req, res) => {
         }, { where: { productId } })
         res.status(200).json(updatedProduct)
     } catch (err) {
-        return catchErr(err)
+        return catchErr(err, res)
     }
 }
 
