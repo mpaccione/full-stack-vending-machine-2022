@@ -12,9 +12,9 @@ const api = axios.create({
     },
 });
 
-export const del = async (path) => {
+export const del = async (path, obj) => {
     try {
-        const response = await api.delete(path);
+        const response = await api.delete(path, obj);
         return response;
     } catch (error) {
         dispatchError(error);

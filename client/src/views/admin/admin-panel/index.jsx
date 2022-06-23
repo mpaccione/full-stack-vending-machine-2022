@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Segment, Table } from "semantic-ui-react";
+import { Segment, Table } from "semantic-ui-react";
 import styled from "styled-components";
 
-import vendingMachine from "../../../assets/vending-machine.jpg";
 import { getInventory } from "../../user/vending-machine/actions";
+import AddProduct from "./components/AddProduct";
+import EditableRow from "./components/EditableRow";
+import vendingMachine from "../../../assets/vending-machine.jpg";
 
 const Background = styled.div`
   background-image: url("${vendingMachine}");
@@ -39,15 +41,22 @@ const OpacityLayer = styled.div`
   width: 100%;
 `;
 
+const TruncatedHeaderCell = styled(Table.HeaderCell)`
+  text-overflow: ellipsis;
+  overflow: hidden;
+`
+
 const columnOrder = [
+  "Delete",
   "createdAt",
-  "currentInventory",
-  "description",
-  "maximumInventory",
+  "productId",
   "name",
   "price",
-  "productId",
+  "description",
+  "currentInventory",
+  "maximumInventory",
   "updatedAt",
+  "Save",
 ];
 
 const AdminPanel = () => {
@@ -66,28 +75,22 @@ const AdminPanel = () => {
       <OpacityLayer />
       <Panel>
         {sodas && (
-          <Table>
+          <Table style={{ tableLayout: "fixed" }}>
             <Table.Header>
               <Table.Row>
-                {Object.keys(sodas[0]).map((key, idx) => (
-                  <Table.HeaderCell key={idx}>
-                    {columnOrder[idx]}
-                  </Table.HeaderCell>
+                {columnOrder.map((heading, idx) => (
+                  <TruncatedHeaderCell key={idx} title={heading}>{heading}</TruncatedHeaderCell>
                 ))}
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {sodas.map((soda, idx) => (
-                <Table.Row key={idx}>
-                  {columnOrder.map((key, idx2) => (
-                    <Table.Cell key={idx2}>{soda[key]}</Table.Cell>
-                  ))}
-                </Table.Row>
+                <EditableRow key={idx} {...{ dispatch, soda }} />
               ))}
             </Table.Body>
           </Table>
         )}
-        <Button>Save Changes</Button>
+        <AddProduct />
       </Panel>
     </>
   );

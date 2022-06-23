@@ -1,13 +1,14 @@
 const express = require('express')
 
 const { productController } = require('../controllers')
-const { createProduct, deleteProduct, getProducts, updateProduct } = productController
+const { createProduct, deleteProduct, dispenseProduct, getProducts, updateProduct } = productController
 
 const productRouter = express.Router({ mergeParams: true });
 
-productRouter.delete('/', deleteProduct)
+productRouter.delete('/delete', deleteProduct)
 productRouter.get('/', getProducts)
-productRouter.post('/', createProduct)
-productRouter.put('/', updateProduct)
+productRouter.post('/create', createProduct)
+productRouter.put('/dispense', dispenseProduct)
+productRouter.put('/update', updateProduct)
 
 module.exports = productRouter

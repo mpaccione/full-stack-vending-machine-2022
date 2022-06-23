@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
+import { requestSoda } from "../actions";
 import { setSelectedId } from "../../../../redux/sodaSlice";
 import canDrop from "../../../../assets/can-drop.wav";
 import chaChing from "../../../../assets/cha-ching.wav";
@@ -31,6 +32,10 @@ const CoinSlotWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 50px;
+
+  h3 {
+    margin: 0 auto;
+  }
 `;
 const Frame = styled.div`
   background: ${(props) => props.theme.metalGradient2};
@@ -111,9 +116,13 @@ const RightMachine = () => {
       return errorAudio.play();
     }
 
-    canDropAudio.play();
-    dispatch(setSelectedId());
-    setDepositedAmount(0);
+    if (dispatch(requestSoda(selectedId))){
+      canDropAudio.play();
+      dispatch(setSelectedId());
+      setDepositedAmount(0);
+    } else {
+      errorAudio.play()
+    }
   };
 
   return (

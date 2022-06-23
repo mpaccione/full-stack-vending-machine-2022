@@ -1,14 +1,13 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const fs = require('fs')
-const path = require('path')
 
 const routes = require('./routes')
 const { sequelize } = require('./models')
 
 const app = express()
 const BASE_PATH = '/api/v1'
+const ENV = process.env.environment || 'development'
 const PORT = process.env.SERVER_PORT || 5000
 
 // middleware
@@ -21,10 +20,14 @@ app.use((req, res, next) => {
         return next()
     }
 
+    if (ENV === 'development' && !req.hostname.includes('localhost') || ENV === 'production' && !req.hostname.includes('production.com')) {
+        return res.status(401).send()
+    }
+
     // body methods
-    if (req.method === 'DELETE' || req.method === 'POST' || req.method === 'PUT') {
+    if (req.method === 'DELETE' || req.method === 'POST' || req.method === 'PUT' && req.path.includes('update')) {
         if (!req.headers['x-access-token']) {
-            return res.status(401).json({ message: 'Missing Credentials' })
+            return res.status(401).json({ message: 'Missing Admin Credentials' })
         }
     }
 
@@ -57,7 +60,7 @@ sequelize.sync()
         mockSodas.forEach(({ id, img, name }) => {
             sequelize.models.Products.update(
                 { image: img },
-                { where: { productId: id }},
+                { where: { productId: id } },
             ).then(image => {
                 try {
                     console.log(`Base64 ${id}:${name.toUpperCase()} Data Seeded`)

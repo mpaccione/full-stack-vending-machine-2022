@@ -10,8 +10,19 @@ const sodaSlice = createSlice({
   name: "soda",
   initialState: initialState,
   reducers: {
+    dispenseSoda: (state, action) => {
+      const sodaCopy = JSON.parse(JSON.stringify(state.sodas))
+      const idx = sodaCopy.findIndex(s => s.id === action.payload.id)
+      sodaCopy[idx] = action.payload
+      state.sodas = sodaCopy
+    },
     setSelectedId: (state, action) => {
-      state.selectedId = action.payload
+      // out of stock - prevent selection
+      if (state.sodas && state.sodas.find(s => s.id === action.payload)?.currentInventory < 1) {
+        state.selectedId = null;
+      } else {
+        state.selectedId = action.payload
+      }
     },
     setSodas: (state, action) => {
       state.sodas = action.payload
@@ -20,6 +31,7 @@ const sodaSlice = createSlice({
 });
 
 export const {
+  dispenseSoda,
   setSelectedId,
   setSodas,
 } = sodaSlice.actions;

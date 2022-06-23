@@ -12,6 +12,7 @@ const SodaImage = styled.div`
 
 const SodaItem = styled.div`
   display: flex;
+  cursor: pointer;
   flex-direction: column;
   flex-basis: 33.33%;
   max-height: 300px;

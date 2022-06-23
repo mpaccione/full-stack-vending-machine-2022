@@ -23,18 +23,19 @@ const SodaContainer = styled.div`
   flex-wrap: wrap;
   height: calc(100% - 150px);
   justify-content: flex-start;
-  padding: 60px 15px 15px 15px;
+  padding: 60px 15px 120px 15px;
 `;
 
 const SodaDescription = styled.div`
   animation: popIn 5s infinite;
-  bottom: 16%;
+  bottom: 25%;
   color: green;
   position: absolute;
   left: 0px;
   text-align: center;
   transition: 0.5s all;
   width: 100%;
+  z-index: 2;
 
   @keyframes popIn {
     0% {
@@ -77,7 +78,7 @@ const LeftMachine = () => {
         ))}
         <SodaDescription>
           {selectedId !== null
-            ? sodas.find((s) => s.productId === selectedId - 1)?.description
+            ? sodas.find((s) => s.productId === selectedId)?.description
             : ""}
         </SodaDescription>
       </SodaContainer>

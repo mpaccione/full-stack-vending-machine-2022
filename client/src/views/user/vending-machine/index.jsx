@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components'
 
@@ -15,9 +15,10 @@ const VendingMachine = () => {
   const { sodas } = useSelector(state => state.soda)
   const dispatch = useDispatch()
   
-  const getSodas = useCallback(() => {
+  const getSodas = () => {
+    console.log('getsodas')
     dispatch(getInventory())
-  }, [])
+  }
 
   useEffect(() => {
     if (!sodas) {
