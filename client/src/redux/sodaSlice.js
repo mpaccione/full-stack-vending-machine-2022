@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 // import { mockSodas } from "../utils/mock";
 
 const initialState = {
+  allPromotions: null,
+  currentPromotions: null,
   selectedId: null,
   sodas: null,
 };
@@ -15,6 +17,12 @@ const sodaSlice = createSlice({
       const idx = sodaCopy.findIndex(s => s.id === action.payload.id)
       sodaCopy[idx] = action.payload
       state.sodas = sodaCopy
+    },
+    setAllPromotions: (state, action) => {
+      state.allPromotions = action.payload
+    },
+    setCurrentPromotions: (state, action) => {
+      state.currentPromotions = action.payload
     },
     setSelectedId: (state, action) => {
       // out of stock - prevent selection
@@ -32,6 +40,8 @@ const sodaSlice = createSlice({
 
 export const {
   dispenseSoda,
+  setAllPromotions,
+  setCurrentPromotions,
   setSelectedId,
   setSodas,
 } = sodaSlice.actions;

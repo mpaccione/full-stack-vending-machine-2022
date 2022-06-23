@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     })
     Promotion.associate = function(models) {
-        Promotion.belongsTo(models.Products)
+        Promotion.belongsTo(models.Products, { foreignKey: 'productId' })
     }
     return Promotion
 }

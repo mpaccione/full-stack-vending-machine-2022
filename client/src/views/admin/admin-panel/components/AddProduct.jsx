@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Icon, Input, Segment, TextArea } from "semantic-ui-react";
+import { Input, Segment, TextArea } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { createProduct } from "../actions";
-import { StyledIcon } from "./EditableRow";
+import { StyledIcon } from "./EditableProductRow";
 
 const StyledSegment = styled(Segment)`
   align-items: center;
   display: flex;
   justify-content: space-evenly;
 
+  input,
   textarea {
     height: 38px;
+    width: calc(100% / 6);
   }
 `;
 
@@ -21,9 +23,22 @@ const AddRow = () => {
   const dispatch = useDispatch();
 
   const onChange = (key, val) => {
-    copyNewRow = JSON.parse(JSON.stringify(newRow));
-    copyNewRow[key] = val;
-    setNewRow(copyNewRow);
+    const copyNewRow = JSON.parse(JSON.stringify(newRow));
+
+    if (key === "image" && val) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        copyNewRow["image"] = btoa(e.target.result);
+        setNewRow(copyNewRow);
+      };
+      reader.onerror = function (err) {
+        alert(JSON.stringify(err));
+      };
+      reader.readAsBinaryString(val);
+    } else {
+      copyNewRow[key] = val;
+      setNewRow(copyNewRow);
+    }
   };
 
   return (
@@ -55,11 +70,16 @@ const AddRow = () => {
           placeholder="Maximum Inventory"
           value={newRow?.name}
         />
+        <Input
+          onChange={(e) => onChange("image", e.target.files)}
+          type="file"
+        />
         <StyledIcon
           name="save"
           onClick={() => {
             dispatch(createProduct(newRow));
           }}
+          style={{ marginLeft: "15px" }}
         />
       </StyledSegment>
     </>

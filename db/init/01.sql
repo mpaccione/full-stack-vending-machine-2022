@@ -27,6 +27,7 @@ DROP TABLE IF EXISTS `Products`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Products` (
   `productId` int NOT NULL AUTO_INCREMENT,
+  `promotionId` int DEFAULT NULL,
   `createdAt` date DEFAULT NULL,
   `currentInventory` int DEFAULT '0',
   `description` varchar(200) DEFAULT NULL,
@@ -35,7 +36,8 @@ CREATE TABLE `Products` (
   `name` varchar(50) DEFAULT NULL,
   `price` float DEFAULT NULL,
   `updatedAt` date DEFAULT NULL,
-  PRIMARY KEY (`productId`)
+  PRIMARY KEY (`productId`),
+  FOREIGN KEY (`promotionId`) REFERENCES `Promotions` (`promotionId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15916 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,13 +50,15 @@ DROP TABLE IF EXISTS `Promotions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Promotions` (
+  `productId` int DEFAULT NULL,
   `promotionId` int NOT NULL AUTO_INCREMENT,
   `createdAt` date DEFAULT NULL,
   `discount` float DEFAULT '0',
   `endDate` date DEFAULT NULL,
   `startDate` date DEFAULT NULL,
   `updatedAt` date DEFAULT NULL,
-  PRIMARY KEY (`promotionId`)
+  PRIMARY KEY (`promotionId`),
+  FOREIGN KEY (`productId`) REFERENCES `Products` (`productId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15912 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

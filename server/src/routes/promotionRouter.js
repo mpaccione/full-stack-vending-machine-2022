@@ -5,9 +5,9 @@ const { createPromotion, deletePromotion, getPromotions, updatePromotion } = pro
 
 const promotionRouter = express.Router({ mergeParams: true });
 
-promotionRouter.delete('/', deletePromotion)
+promotionRouter.delete('/delete', deletePromotion)
 promotionRouter.get('/', getPromotions)
-promotionRouter.post('/', createPromotion)
-promotionRouter.put('/', updatePromotion)
+promotionRouter.post('/create', createPromotion)
+promotionRouter.put('/update', updatePromotion)
 
 module.exports = promotionRouter

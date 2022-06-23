@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     })
     Product.associate = function(models) {
-        Product.hasMany(models.Promotions)
+        Product.hasMany(models.Promotions, { foreignKey: 'promotionId' })
     }
     return Product
 }

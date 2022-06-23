@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Segment, Table } from "semantic-ui-react";
+import { Segment, Tab, Table } from "semantic-ui-react";
 import styled from "styled-components";
 
+import { getAllPromotions } from "./actions";
 import { getInventory } from "../../user/vending-machine/actions";
 import AddProduct from "./components/AddProduct";
-import EditableRow from "./components/EditableRow";
+import AddPromotion from "./components/AddPromotion";
+import EditableProductRow from "./components/EditableProductRow";
+import EditablePromotionRow from "./components/EditablePromotionRow";
 import vendingMachine from "../../../assets/vending-machine.jpg";
 
 const Background = styled.div`
@@ -44,9 +47,9 @@ const OpacityLayer = styled.div`
 const TruncatedHeaderCell = styled(Table.HeaderCell)`
   text-overflow: ellipsis;
   overflow: hidden;
-`
+`;
 
-const columnOrder = [
+const productColumnOrder = [
   "Delete",
   "createdAt",
   "productId",
@@ -59,38 +62,86 @@ const columnOrder = [
   "Save",
 ];
 
+const promotionColumnOrder = [
+  "Delete",
+  "createdAt",
+  "productId",
+  "startDate",
+  "endDate",
+  "discount",
+  "updatedAt",
+  "Save",
+];
+
+const AdminTable = ({ data, columnOrder, type }) => (
+  <>
+    <h3>{type}</h3>
+    {data && (
+      <Table style={{ tableLayout: "fixed" }}>
+        <Table.Header>
+          <Table.Row>
+            {columnOrder.map((heading, idx) => (
+              <TruncatedHeaderCell key={idx} title={heading}>
+                {heading}
+              </TruncatedHeaderCell>
+            ))}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {type === "Products"
+            ? data.map((soda, idx) => (
+                <EditableProductRow key={idx} {...{ soda }} />
+              ))
+            : data.map((promotion, idx) => (
+                <EditablePromotionRow key={idx} {...{ promotion }} />
+              ))}
+        </Table.Body>
+      </Table>
+    )}
+    {type === "Products" ? <AddProduct /> : <AddPromotion />}
+  </>
+);
+
 const AdminPanel = () => {
   const dispatch = useDispatch();
-  const { sodas } = useSelector((state) => state.soda);
+  const { allPromotions, sodas } = useSelector((state) => state.soda);
 
   useEffect(() => {
+    if (!allPromotions) {
+      dispatch(getAllPromotions());
+    }
     if (!sodas) {
       dispatch(getInventory());
     }
-  }, [sodas]);
+  }, [allPromotions, dispatch, sodas]);
+
+  const Products = () => (
+    <AdminTable
+      {...{ data: sodas, columnOrder: productColumnOrder, type: "Products" }}
+    />
+  );
+
+  const Promotions = () => (
+    <AdminTable
+      {...{
+        data: allPromotions,
+        columnOrder: promotionColumnOrder,
+        type: "Promotions",
+      }}
+    />
+  );
 
   return (
     <>
       <Background />
       <OpacityLayer />
       <Panel>
-        {sodas && (
-          <Table style={{ tableLayout: "fixed" }}>
-            <Table.Header>
-              <Table.Row>
-                {columnOrder.map((heading, idx) => (
-                  <TruncatedHeaderCell key={idx} title={heading}>{heading}</TruncatedHeaderCell>
-                ))}
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {sodas.map((soda, idx) => (
-                <EditableRow key={idx} {...{ dispatch, soda }} />
-              ))}
-            </Table.Body>
-          </Table>
-        )}
-        <AddProduct />
+        <Tab
+          panes={[
+            { menuItem: "Products", render: () => <Products /> },
+            { menuItem: "Promotions", render: () => <Promotions /> },
+          ]}
+        />
       </Panel>
     </>
   );

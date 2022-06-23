@@ -6,6 +6,7 @@ services:
       - "3001:3000"
     volumes:
       - ./client:/app
+      - ./client/node_modules
 
   db:
     command: '--default-authentication-plugin=mysql_native_password'
@@ -29,3 +30,4 @@ services:
       - db
     volumes:
       - ./server:/app
+      - ./server/node_modules
