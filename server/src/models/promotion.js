@@ -7,13 +7,24 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
         },
         discount: {
-            type: DataTypes.FLOAT
+            type: DataTypes.INTEGER,
+            set(value) {
+                this.setDataValue('discount', parseInt(value))
+            }
         },
         endDate: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            set(date) {
+                console.log(date)
+                this.setDataValue('endDate', new Date(date).toJSON().slice(0, 10))
+            }
         },
         startDate: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            set(date) {
+                console.log(date)
+                this.setDataValue('startDate', new Date(date).toJSON().slice(0, 10))
+            }
         }
     })
     Promotion.associate = function(models) {

@@ -53,7 +53,7 @@ CREATE TABLE `Promotions` (
   `productId` int DEFAULT NULL,
   `promotionId` int NOT NULL AUTO_INCREMENT,
   `createdAt` date DEFAULT NULL,
-  `discount` float DEFAULT '0',
+  `discount` int DEFAULT NULL,
   `endDate` date DEFAULT NULL,
   `startDate` date DEFAULT NULL,
   `updatedAt` date DEFAULT NULL,

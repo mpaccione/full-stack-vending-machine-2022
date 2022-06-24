@@ -1,14 +1,19 @@
 import { get, put } from '../../../../api'
-import { dispenseSoda, setSodas } from '../../../../redux/sodaSlice'
+import { dispenseSoda, setCurrentPromotions, setSodas } from '../../../../redux/sodaSlice'
 
-const getInventory = () => async dispatch => {
+const getInventory = (promotions = false) => async dispatch => {
     try {
-        console.log('getInventory')
-        const res = await get('/products')
+        const res = await get(`/products?promotions=${promotions}`)
         console.log({ res })
-        dispatch(setSodas(res))
+        if (res) {
+            dispatch(setSodas(res.products))
+            res?.promotions && dispatch(setCurrentPromotions(res.promotions))
+            return true
+        }
+        return false
     } catch (err) {
         alert(JSON.stringify(err))
+        return false
     }
 }
 

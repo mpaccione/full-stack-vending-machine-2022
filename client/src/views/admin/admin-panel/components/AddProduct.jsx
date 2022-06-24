@@ -4,7 +4,7 @@ import { Input, Segment, TextArea } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { createProduct } from "../actions";
-import { StyledIcon } from "./EditableProductRow";
+import { StyledIcon } from "./EditIcon";
 
 const StyledSegment = styled(Segment)`
   align-items: center;

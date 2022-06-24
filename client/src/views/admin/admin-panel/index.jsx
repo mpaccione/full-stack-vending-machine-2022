@@ -59,7 +59,7 @@ const productColumnOrder = [
   "currentInventory",
   "maximumInventory",
   "updatedAt",
-  "Save",
+  "Edit/Save",
 ];
 
 const promotionColumnOrder = [
@@ -70,7 +70,7 @@ const promotionColumnOrder = [
   "endDate",
   "discount",
   "updatedAt",
-  "Save",
+  "Edit/Save",
 ];
 
 const AdminTable = ({ data, columnOrder, type }) => (

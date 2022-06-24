@@ -153,6 +153,7 @@ const RightMachine = () => {
           if (dragOverCoinSlot) {
             insertCoinAudio.play();
             setDepositedAmount(depositedAmount + 0.25);
+            setDragOverCoinSlot(false)
           }
         }}
         src={quarter}

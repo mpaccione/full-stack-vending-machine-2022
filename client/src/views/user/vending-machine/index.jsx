@@ -17,7 +17,7 @@ const VendingMachine = () => {
   
   const getSodas = () => {
     console.log('getsodas')
-    dispatch(getInventory())
+    dispatch(getInventory(true))
   }
 
   useEffect(() => {

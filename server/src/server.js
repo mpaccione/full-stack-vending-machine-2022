@@ -11,8 +11,8 @@ const ENV = process.env.environment || 'development'
 const PORT = process.env.SERVER_PORT || 5000
 
 // middleware
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "15mb" }))
+app.use(bodyParser.urlencoded({ extended: true, limit: "15mb" }));
 app.use(cors())
 app.use((req, res, next) => {
     // dev testing

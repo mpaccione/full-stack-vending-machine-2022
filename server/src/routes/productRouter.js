@@ -5,7 +5,7 @@ const { createProduct, deleteProduct, dispenseProduct, getProducts, updateProduc
 
 const productRouter = express.Router({ mergeParams: true });
 
-productRouter.delete('/delete', deleteProduct)
+productRouter.delete('/delete/:productId', deleteProduct)
 productRouter.get('/', getProducts)
 productRouter.post('/create', createProduct)
 productRouter.put('/dispense', dispenseProduct)

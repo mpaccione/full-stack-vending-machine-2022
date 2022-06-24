@@ -3,8 +3,8 @@ const { catchErr } = require('../utils')
 
 const createPromotion = async (req, res) => {
     try {
-        const { discount, endDate, startDate } = req.body
-        const newPromotion = await new Promotions({ discount, endDate, startDate }).save()
+        const { discount, endDate, productId, startDate } = req.body.promotion
+        const newPromotion = await Promotions.create({ discount, endDate, productId, startDate })
         res.status(200).json(newPromotion)
     } catch (err) {
         return catchErr(err, res)
@@ -13,8 +13,9 @@ const createPromotion = async (req, res) => {
 
 const deletePromotion = async (req, res) => {
     try {
-        const deletePromotion = await Promotions.destroy({ where: { promotionId: req.body.id } })
-        res.status(200).json(deletePromotion)
+        const { promotionId } = req.params
+        const deletePromotion = await Promotions.destroy({ where: { promotionId } })
+        res.status(201).json(deletePromotion)
     } catch (err) {
         return catchErr(err, res)
     }
@@ -30,7 +31,7 @@ const getPromotions = async (req, res) => {
         } else {
             allPromotions = await Promotions.findAll()
         }
-        
+
         res.status(200).json(allPromotions)
     } catch (err) {
         return catchErr(err, res)

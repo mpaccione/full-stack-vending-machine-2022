@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Icon, Input, TableRow, TableCell, TextArea } from "semantic-ui-react";
+import { Input, TableRow, TableCell, TextArea } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { deleteProduct, updateProduct } from "../actions";
-
-export const StyledIcon = styled(Icon)`
-  cursor: pointer;
-  transition: 0.25s all;
-
-  &:hover {
-    transform: scale(1.5);
-  }
-`;
+import EditIcon, { StyledIcon } from "./EditIcon";
 
 export const StyledRow = styled(TableRow)`
   td {
@@ -46,7 +38,7 @@ const EditableProductRow = ({ soda }) => {
   };
 
   useEffect(() => {
-    if (editing === 0) {
+    if (editing === 1) {
       const saved = dispatch(updateProduct(localSoda));
       saved && setEditing(-1);
     }
@@ -62,7 +54,7 @@ const EditableProductRow = ({ soda }) => {
           }}
         />
       </TableCell>
-      <TableCell>{createdAt}</TableCell>
+      <TableCell>{new Date(createdAt).toLocaleDateString()}</TableCell>
       <TableCell>{productId}</TableCell>
       <TableCell>
         <Input
@@ -99,14 +91,9 @@ const EditableProductRow = ({ soda }) => {
           value={maximumInventory}
         />
       </TableCell>
-      <TableCell>{updatedAt}</TableCell>
+      <TableCell>{new Date(updatedAt).toLocaleDateString()}</TableCell>
       <TableCell>
-        <StyledIcon
-          name={editing ? "save" : "edit"}
-          onClick={() => {
-            setEditing(editing ? 0 : 1);
-          }}
-        />
+        <EditIcon {...{ editing, setEditing }} />
       </TableCell>
     </StyledRow>
   );

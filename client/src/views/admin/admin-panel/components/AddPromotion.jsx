@@ -4,7 +4,7 @@ import { Dropdown, Input, Segment } from "semantic-ui-react";
 import styled from "styled-components";
 
 import { createPromotion } from "../actions";
-import { StyledIcon } from "./EditableProductRow";
+import { StyledIcon } from "./EditIcon";
 
 const Column = styled.div`
   display: flex;
@@ -56,7 +56,8 @@ const AddPromotion = () => {
           />
         </Column>
         <Column>
-          <label>Start Date</label>{}
+          <label>Start Date</label>
+          {}
           <Input
             type="date"
             onChange={(e) => {
@@ -77,11 +78,18 @@ const AddPromotion = () => {
         </Column>
         <Column style={{ display: "flex", flexDirection: "column" }}>
           <label>Discount Percentage as Whole Number</label>
-          <Input type="number" />
+          <Input
+            onChange={(e) => {
+              setPromotion({ ...newPromotion, discount: e.target.value });
+            }}
+            type="number"
+            value={newPromotion?.discount}
+          />
         </Column>
         <StyledIcon
           name="save"
           onClick={() => {
+            console.log({ newPromotion })
             dispatch(createPromotion(newPromotion));
           }}
         />

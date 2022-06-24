@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         image: {
             get() {
-              return this.getDataValue('image').toString()
+              return this.getDataValue('image') ? this.getDataValue('image').toString() : null
             },
             type: DataTypes.BLOB('medium')
         },

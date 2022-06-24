@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import { Input, TableCell } from "semantic-ui-react";
 
 import { deletePromotion, updatePromotion } from "../actions";
-import { StyledIcon, StyledRow } from "./EditableProductRow";
+import { StyledRow } from "./EditableProductRow";
+import EditIcon, { StyledIcon } from "./EditIcon";
 
 const EditablePromotionRow = ({ promotion }) => {
   const [editing, setEditing] = useState(-1);
   const [localPromotion, setLocalPromotion] = useState(promotion);
   const dispatch = useDispatch();
+  
   const { createdAt, discount, endDate, promotionId, startDate, updatedAt } =
     localPromotion;
 
@@ -33,7 +35,7 @@ const EditablePromotionRow = ({ promotion }) => {
           }}
         />
       </TableCell>
-      <TableCell>{createdAt}</TableCell>
+      <TableCell>{new Date(createdAt).toLocaleDateString()}</TableCell>
       <TableCell>{promotionId}</TableCell>
       <TableCell>
         <Input
@@ -57,14 +59,9 @@ const EditablePromotionRow = ({ promotion }) => {
           value={discount}
         />
       </TableCell>
-      <TableCell>{updatedAt}</TableCell>
+      <TableCell>{new Date(updatedAt).toLocaleDateString()}</TableCell>
       <TableCell>
-        <StyledIcon
-          name={editing ? "save" : "edit"}
-          onClick={() => {
-            setEditing(editing ? 0 : 1);
-          }}
-        />
+        <EditIcon {...{ editing, setEditing }} />
       </TableCell>
     </StyledRow>
   );
