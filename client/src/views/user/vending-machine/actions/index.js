@@ -4,7 +4,6 @@ import { dispenseSoda, setCurrentPromotions, setSodas } from '../../../../redux/
 const getInventory = (promotions = false) => async dispatch => {
     try {
         const res = await get(`/products?promotions=${promotions}`)
-        console.log({ res })
         if (res) {
             dispatch(setSodas(res.products))
             res?.promotions && dispatch(setCurrentPromotions(res.promotions))

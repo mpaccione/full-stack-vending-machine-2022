@@ -6,7 +6,7 @@ import { setSelectedId } from "../../../../redux/sodaSlice";
 import Soda from "./Soda";
 
 const Frame = styled.div`
-  background: ${props => props.theme.metalGradient1};
+  background: ${(props) => props.theme.metalGradient1};
   background-color: gray;
   border-left: darkgray 30px solid;
   border-right: darkgray 30px solid;
@@ -51,7 +51,7 @@ const SodaDescription = styled.div`
 `;
 
 const SodaDispenser = styled.div`
-  background: ${props => props.theme.shadowGradient};
+  background: ${(props) => props.theme.shadowGradient};
   background-color: black;
   border-radius: 15px;
   height: 80px;
@@ -61,21 +61,33 @@ const SodaDispenser = styled.div`
 `;
 
 const LeftMachine = () => {
-  const { selectedId, sodas } = useSelector(state => state.soda);
+  const { currentPromotions, selectedId, sodas } = useSelector((state) => state.soda);
   const dispatch = useDispatch();
+
+  const getDisplayPrice = (s) => {
+    if (currentPromotions.hasOwnProperty(s.productId)) {
+      return s.price - (s.price * (currentPromotions[s.productId].discount / 100)) // apply discount percentage if promotion
+    }
+    return s.price
+  }
 
   return (
     <Frame>
       <SodaContainer>
-        {sodas && sodas.map((s, idx) => (
-          <Soda
-            {...{ ...s, selectedId }}
-            key={idx}
-            onClick={() => {
-              dispatch(setSelectedId(s.productId));
-            }}
-          />
-        ))}
+        {sodas &&
+          sodas.map((s, idx) => (
+            <Soda
+              {...{
+                ...s,
+                price: getDisplayPrice(s),
+                selectedId,
+              }}
+              key={idx}
+              onClick={() => {
+                dispatch(setSelectedId(s.productId));
+              }}
+            />
+          ))}
         <SodaDescription>
           {selectedId !== null
             ? sodas.find((s) => s.productId === selectedId)?.description

@@ -16,7 +16,6 @@ const VendingMachine = () => {
   const dispatch = useDispatch()
   
   const getSodas = () => {
-    console.log('getsodas')
     dispatch(getInventory(true))
   }
 

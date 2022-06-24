@@ -15,7 +15,7 @@ const deletePromotion = async (req, res) => {
     try {
         const { promotionId } = req.params
         const deletePromotion = await Promotions.destroy({ where: { promotionId } })
-        res.status(201).json(deletePromotion)
+        res.status(204).json(deletePromotion)
     } catch (err) {
         return catchErr(err, res)
     }

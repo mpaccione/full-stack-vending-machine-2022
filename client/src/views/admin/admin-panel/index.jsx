@@ -66,6 +66,7 @@ const promotionColumnOrder = [
   "Delete",
   "createdAt",
   "productId",
+  "promotionId",
   "startDate",
   "endDate",
   "discount",

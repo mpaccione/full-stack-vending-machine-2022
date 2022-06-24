@@ -34,7 +34,7 @@ const EditableProductRow = ({ soda }) => {
   } = localSoda;
 
   const onChange = (key, val) => {
-    setLocalSoda(...{ localSoda, [key]: val });
+    setLocalSoda({ ...localSoda, [key]: val });
   };
 
   useEffect(() => {

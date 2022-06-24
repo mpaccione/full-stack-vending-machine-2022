@@ -1,6 +1,6 @@
 import { get, del, post, put } from '../../../../api'
 
-import { addNewPromotion, deleteSoda, setAllPromotions, setCurrentPromotions, } from '../../../../redux/sodaSlice'
+import { addPromo, deletePromo, deleteSoda, setAllPromotions, setCurrentPromotions, } from '../../../../redux/sodaSlice'
 
 const createProduct = product => async dispatch => {
     try {
@@ -15,7 +15,7 @@ const createPromotion = promotion => async dispatch => {
     try {
         const res = await post('/promotions/create', { promotion })
         if (res.data) {
-            await dispatch(addNewPromotion(res.data))
+            await dispatch(addPromo(res.data))
             return true
         }
         return false
@@ -26,10 +26,12 @@ const createPromotion = promotion => async dispatch => {
 
 const deleteProduct = productId => async dispatch => {
     try {
-        console.log({ productId })
         const res = await del(`/products/delete/${productId}`)
-        console.log({ res })
-        return res.status == 201 ? dispatch(deleteSoda(productId)) : false
+        if (res.status === 204) {
+            await dispatch(deleteSoda(productId))
+            return true
+        }
+        return false
     } catch (err) {
         alert(JSON.stringify(err))
     }
@@ -37,8 +39,12 @@ const deleteProduct = productId => async dispatch => {
 
 const deletePromotion = promotionId => async dispatch => {
     try {
-        const res = await del('/promotions/delete', { promotionId })
-        return res.status == 201 ? dispatch(deletePromotion(productId)) : false
+        const res = await del(`/promotions/delete/${promotionId}`)
+        if (res.status === 204) {
+            await dispatch(deletePromo(promotionId))
+            return true
+        }
+        return false
     } catch (err) {
         alert(JSON.stringify(err))
     }

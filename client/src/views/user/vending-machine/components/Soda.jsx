@@ -84,7 +84,7 @@ const Soda = ({
     <SodaLabel>
       <span>#{productId}</span>
       <br />
-      <span>${price}.00</span>
+      <span>${parseFloat(price).toFixed(2)}</span>
     </SodaLabel>
   </SodaItem>
 );

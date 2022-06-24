@@ -89,7 +89,6 @@ const AddPromotion = () => {
         <StyledIcon
           name="save"
           onClick={() => {
-            console.log({ newPromotion })
             dispatch(createPromotion(newPromotion));
           }}
         />

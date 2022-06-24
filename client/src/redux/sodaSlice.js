@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   allPromotions: null,
-  currentPromotions: null,
+  currentPromotions: {},
   selectedId: null,
   sodas: null,
 };
@@ -12,33 +12,43 @@ const sodaSlice = createSlice({
   name: "soda",
   initialState: initialState,
   reducers: {
-    addNewPromotion: (state, action) => {
+    addPromo: (state, action) => {
       // admin - adding of promotion
       const promotionsCopy = JSON.parse(JSON.stringify(state.allPromotions))
       promotionsCopy.push(action.payload)
       promotionsCopy.sort((a, b) => Date(a.createdAt) - Date(b.createdAt))
       state.allPromotions = promotionsCopy
+
+      const now = new Date()
+      if (now > action.payload.startDate && now < action.payload.endDate) {
+        state.currentPromotions[action.payload.productId] = action.payload
+      }
     },
-    deletePromotion: (state, action) => {
+    deletePromo: (state, action) => {
       // admin - deletion of promotion - all and current
       const allIdx = state.allPromotions.findIndex(s => s.promotionId === action.payload)
-      const currentIdx = state.currentPromotions.findIndex(s => s.promotionId === action.payload)
 
       if (allIdx !== -1) {
+        // all promotions is json array
         const allPromotionsCopy = JSON.parse(JSON.stringify(state.allPromotions))
         allPromotionsCopy.splice(allIdx, 1)
         state.allPromotions = allPromotionsCopy
       }
+      
+      if (Object.keys(state.currentPromotions).length > 0) {
+        const currentPromotionObj = Object.values(state.currentPromotions).find(s => s.promotionId === action.payload)
 
-      if (currentIdx !== -1) {
-        const currentPromotionsCopy = JSON.parse(JSON.stringify(state.currentPromotions))
-        currentPromotionsCopy.splice(currentIdx, 1)
-        state.currentPromotions = currentPromotionsCopy
+        if (currentPromotionObj) {
+          // current promotions are productId indexed key vals
+          const currentPromotionsCopy = JSON.parse(JSON.stringify(state.currentPromotions))
+          delete currentPromotionsCopy[currentPromotionObj.productId]
+          state.currentPromotions = currentPromotionsCopy
+        }
       }
     },
     deleteSoda: (state, action) => {
       // admin - deletion of product
-      const idx = sodas.findIndex(s => s.productId === action.payload)
+      const idx = state.sodas.findIndex(s => s.productId === action.payload)
       if (idx !== -1) {
         const sodaCopy = JSON.parse(JSON.stringify(state.sodas))
         sodaCopy.splice(idx, 1)
@@ -47,7 +57,7 @@ const sodaSlice = createSlice({
     },
     dispenseSoda: (state, action) => {
       // user - updates soda with new backend json (inventory)
-      const idx = sodas.findIndex(s => s.productId === action.payload.productId)
+      const idx = state.sodas.findIndex(s => s.productId === action.payload.productId)
       if (idx !== -1) {
         const sodaCopy = JSON.parse(JSON.stringify(state.sodas))
         sodaCopy[idx] = action.payload
@@ -78,8 +88,8 @@ const sodaSlice = createSlice({
 });
 
 export const {
-  addNewPromotion,
-  deletePromotion,
+  addPromo,
+  deletePromo,
   deleteSoda,
   dispenseSoda,
   setAllPromotions,

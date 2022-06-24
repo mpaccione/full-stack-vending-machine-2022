@@ -11,11 +11,11 @@ const EditablePromotionRow = ({ promotion }) => {
   const [localPromotion, setLocalPromotion] = useState(promotion);
   const dispatch = useDispatch();
   
-  const { createdAt, discount, endDate, promotionId, startDate, updatedAt } =
+  const { createdAt, discount, endDate, productId, promotionId, startDate, updatedAt } =
     localPromotion;
 
   const onChange = (key, val) => {
-    setLocalPromotion(...{ localPromotion, [key]: val });
+    setLocalPromotion({ ...localPromotion, [key]: val });
   };
 
   useEffect(() => {
@@ -36,6 +36,7 @@ const EditablePromotionRow = ({ promotion }) => {
         />
       </TableCell>
       <TableCell>{new Date(createdAt).toLocaleDateString()}</TableCell>
+      <TableCell>{productId}</TableCell>
       <TableCell>{promotionId}</TableCell>
       <TableCell>
         <Input
