@@ -1,8 +1,10 @@
-# Clientside Video Walkthrough
+# UX Video Walkthrough
 
 https://www.loom.com/share/4ab6e8fe40234bc6a16f91fdd52d2798
 
-# Backend Video Walkthrough
+# Code Video Walkthrough
+
+https://www.loom.com/share/1fec6ef10cea4f418a36e626ccacf824
 
 ## How to Run
 
@@ -11,3 +13,12 @@ https://www.loom.com/share/4ab6e8fe40234bc6a16f91fdd52d2798
 - server runs on 5001
 
 # full-stack-vending-machine-2022
+
+- React
+    - Styled Components
+- Node
+    - Express
+- MySQL
+    - Sequelize
+- Docker
+    - Docker-Compose
