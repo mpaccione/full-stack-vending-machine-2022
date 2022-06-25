@@ -15,6 +15,7 @@ https://www.loom.com/share/1fec6ef10cea4f418a36e626ccacf824
 # full-stack-vending-machine-2022
 
 - React
+    - Redux Toolkit
     - Styled Components
 - Node
     - Express
