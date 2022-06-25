@@ -14,6 +14,11 @@ const Frame = styled.div`
   position: relative;
   height: calc(100% - 100px);
   width: 70%;
+
+  @media (max-width: 767px) {
+    border: 0px;
+    width: 100%;
+  }
 `;
 
 const SodaContainer = styled.div`
@@ -47,6 +52,10 @@ const SodaDescription = styled.div`
     100% {
       font-size: 1.05em;
     }
+  }
+
+  @media (max-width: 767px) {
+    display: none;
   }
 `;
 
@@ -90,7 +99,7 @@ const LeftMachine = () => {
           ))}
         <SodaDescription>
           {selectedId !== null
-            ? sodas.find((s) => s.productId === selectedId)?.description
+            ? sodas.find((s) => s.productId == selectedId)?.description
             : ""}
         </SodaDescription>
       </SodaContainer>

@@ -36,6 +36,14 @@ const CoinSlotWrapper = styled.div`
   h3 {
     margin: 0 auto;
   }
+
+  @media (max-width: 1023px) {
+    flex-direction: column;
+
+    h3 {
+      text-align: center;
+    }
+  }
 `;
 const Frame = styled.div`
   background: ${(props) => props.theme.metalGradient2};
@@ -45,6 +53,13 @@ const Frame = styled.div`
   position: relative;
   height: calc(100% - 100px);
   width: 30%;
+
+  @media (max-width: 767px) {
+    display: flex;
+    border: 0px;
+    flex-direction: row;
+    width: 100%;
+  }
 `;
 
 const InputScreen = styled.div`
@@ -54,6 +69,10 @@ const InputScreen = styled.div`
   font-size: 2em;
   text-align: center;
   width: 50%;
+
+  @media (max-width: 767px) {
+    height: 50%;
+  }
 `;
 
 const Quarter = styled.img`
@@ -77,6 +96,10 @@ const Quarter = styled.img`
       transform: scale(1);
     }
   }
+
+  @media (max-width: 767px) {
+    margin: auto;
+  }
 `;
 
 const RefundMoney = styled.div`
@@ -94,6 +117,11 @@ const ScreenWrapper = styled.div`
   border-radius: 15px;
   overflow: hidden;
   width: 100%;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    width: 35%;
+  }
 `;
 
 const canDropAudio = new Audio(canDrop);
@@ -111,6 +139,11 @@ const RightMachine = () => {
   const [dragOverCoinSlot, setDragOverCoinSlot] = useState(false);
   const dispatch = useDispatch();
 
+  const updateAmount = (val) => {
+    setDepositedAmount(val);
+    window.localStorage.setItem("amount", val)
+  }
+
   const buySoda = () => {
     if (depositedAmount < 1 || selectedId === undefined) {
       return errorAudio.play();
@@ -119,7 +152,7 @@ const RightMachine = () => {
     if (dispatch(requestSoda(selectedId))){
       canDropAudio.play();
       dispatch(setSelectedId());
-      setDepositedAmount(0);
+      updateAmount(0)
     } else {
       errorAudio.play()
     }
@@ -142,7 +175,7 @@ const RightMachine = () => {
         <RefundMoney
           onClick={() => {
             depositedAmount > 0 && refundCoinAudio.play();
-            setDepositedAmount(0);
+            updateAmount(0)
           }}
         />
       </CoinSlotWrapper>
@@ -152,7 +185,7 @@ const RightMachine = () => {
         onDragEnd={() => {
           if (dragOverCoinSlot) {
             insertCoinAudio.play();
-            setDepositedAmount(depositedAmount + 0.25);
+            updateAmount(parseFloat(depositedAmount) + 0.25)
             setDragOverCoinSlot(false)
           }
         }}

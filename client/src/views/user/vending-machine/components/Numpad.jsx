@@ -7,13 +7,21 @@ import beep from "../../../../assets/beep.wav";
 
 const numStyles = {
   "background-color": "darkred",
-  "color": "white",
-  "cursor": "pointer",
+  color: "white",
+  cursor: "pointer",
   "font-weight": "bolder",
-  "padding": "15px 0px",
+  padding: "15px 0px",
   "text-align": "center",
-  "transition": "0.5s all"
+  transition: "0.5s all",
 };
+
+const ButtonWrapper = styled.div`
+  display: flex;
+
+  @media (max-width: 767px) {
+    flex-direction: column
+  }
+`
 
 const Num = styled.div`
   ${numStyles}
@@ -22,6 +30,10 @@ const Num = styled.div`
 
   &:hover {
     background-color: red;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 1.2em;
   }
 `;
 
@@ -35,13 +47,26 @@ const NumpadButton = styled.button`
   &:hover {
     background-color: red;
   }
-  
+
   &:first-of-type {
     border-right: 0px;
   }
 
   &:last-of-type {
     border-left: 0px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 1em;
+    width: 100%;
+
+    &:first-of-type {
+      border-right: 5px solid black
+    }
+
+    &:last-of-type {
+      border-left: 5px solid black
+    }
   }
 `;
 
@@ -55,10 +80,10 @@ const NumpadWrapper = styled.div`
 const audio = new Audio(beep);
 
 const Numpad = ({ buySoda, selectedId }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   return (
-    <>
+    <div>
       <NumpadWrapper>
         {new Array(9).fill(null).map((falsey, idx) => (
           <Num
@@ -74,23 +99,25 @@ const Numpad = ({ buySoda, selectedId }) => {
           </Num>
         ))}
       </NumpadWrapper>
-      <NumpadButton
-        onClick={() => {
-          audio.play();
-          dispatch(setSelectedId(null));
-        }}
-      >
-        Clear
-      </NumpadButton>
-      <NumpadButton
-        onClick={() => {
-          audio.play();
-          buySoda();
-        }}
-      >
-        Select
-      </NumpadButton>
-    </>
+      <ButtonWrapper>
+        <NumpadButton
+          onClick={() => {
+            audio.play();
+            dispatch(setSelectedId(null));
+          }}
+        >
+          Clear
+        </NumpadButton>
+        <NumpadButton
+          onClick={() => {
+            audio.play();
+            buySoda();
+          }}
+        >
+          Select
+        </NumpadButton>
+      </ButtonWrapper>
+    </div>
   );
 };
 

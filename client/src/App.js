@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components"
@@ -29,12 +28,6 @@ const ProtectedAdminPanel = ({ userData }) => (
 
 function App() {
   const { userData } = useSelector(state => state.user)
-
-  useEffect(() => {
-    // get localstorage currency
-
-    // check for admin password and if logged in redirect
-  }, [])
 
   return (
     <ThemeProvider theme={theme}>

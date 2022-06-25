@@ -9,6 +9,10 @@ import RightMachine from "./components/RightMachine";
 const VendingContainer = styled.div`
     display: flex;
     height: 100%;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
 `
 
 const VendingMachine = () => {

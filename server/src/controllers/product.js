@@ -6,9 +6,9 @@ const { catchErr } = require('../utils')
 
 const createProduct = async (req, res) => {
     try {
-        const { currentInventory, description, maximumInventory, name, price } = req.body.product
+        const { currentInventory, description, image, maximumInventory, name, price } = req.body.product
         const newProduct = await new Products({
-            currentInventory, description, maximumInventory, name, price
+            currentInventory, description, image, maximumInventory, name, price
         }).save()
         res.status(200).json(newProduct)
     } catch (err) {
@@ -60,7 +60,7 @@ const getProducts = async (req, res) => {
                 productRes.promotions[promo.productId] = promo
             })
         }
-        
+
         productRes.products = await Products.findAll()
         res.status(200).json(productRes)
     } catch (err) {

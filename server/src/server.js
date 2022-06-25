@@ -13,7 +13,7 @@ const PORT = process.env.SERVER_PORT || 5000
 // middleware
 app.use(bodyParser.json({ limit: "15mb" }))
 app.use(bodyParser.urlencoded({ extended: true, limit: "15mb" }));
-app.use(cors())
+app.use(cors({ exposedHeaders: ['Content-Disposition'] }))
 app.use((req, res, next) => {
     // dev testing
     if (req.path = '/ping') {

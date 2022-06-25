@@ -22,6 +22,11 @@ const SodaItem = styled.div`
   &.selected h3 {
     color: green !important;
   }
+
+  @media (max-width: 767px) {
+    flex-basis: 50%;
+    height: 200px;
+  }
 `;
 
 const SodaLabel = styled.h3`
@@ -30,10 +35,12 @@ const SodaLabel = styled.h3`
   text-align: center;
 
   span:first-of-type {
-    background-color: white;
-    border-radius: 50%;
     font-size: 1.3em;
     font-weight: bolder;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 0.75em;
   }
 `;
 

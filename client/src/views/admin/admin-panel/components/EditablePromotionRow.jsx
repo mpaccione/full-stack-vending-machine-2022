@@ -19,7 +19,7 @@ const EditablePromotionRow = ({ promotion }) => {
   };
 
   useEffect(() => {
-    if (editing === 0) {
+    if (editing === 1) {
       const saved = dispatch(updatePromotion(localPromotion));
       saved && setEditing(-1);
     }
@@ -40,21 +40,21 @@ const EditablePromotionRow = ({ promotion }) => {
       <TableCell>{promotionId}</TableCell>
       <TableCell>
         <Input
-          disabled={editing}
+          disabled={editing === 0 ? false : true}
           onChange={(e) => onChange("startDate", e.target.value)}
           value={startDate}
         />
       </TableCell>
       <TableCell>
         <Input
-          disabled={editing}
+          disabled={editing === 0 ? false : true}
           onChange={(e) => onChange("endDate", e.target.value)}
           value={endDate}
         />
       </TableCell>
       <TableCell>
         <Input
-          disabled={editing}
+          disabled={editing === 0 ? false : true}
           onChange={(e) => onChange("discount", e.target.value)}
           type="number"
           value={discount}

@@ -1,11 +1,15 @@
 import { get, del, post, put } from '../../../../api'
 
-import { addPromo, deletePromo, deleteSoda, setAllPromotions, setCurrentPromotions, } from '../../../../redux/sodaSlice'
+import { addPromo, addSoda, deletePromo, deleteSoda, setAllPromotions, setCurrentPromotions, updateSoda, updatePromo } from '../../../../redux/sodaSlice'
 
 const createProduct = product => async dispatch => {
     try {
         const res = await post('/products/create', { product })
-        return res.data ? res.data : false
+        if (res.data) {
+            await dispatch(addSoda(res.data))
+            return true
+        }
+        return false
     } catch (err) {
         alert(JSON.stringify(err))
     }
@@ -72,7 +76,11 @@ const getCurrentPromotions = (startDate, endDate) => async dispatch => {
 const updateProduct = product => async dispatch => {
     try {
         const res = await put('/products/update', { product })
-        return res.data ? res.data : false
+        if (res.data) {
+            await dispatch(updateSoda(product))
+            return true
+        }
+        return false
     } catch (err) {
         alert(JSON.stringify(err))
     }
@@ -81,7 +89,11 @@ const updateProduct = product => async dispatch => {
 const updatePromotion = promotion => async dispatch => {
     try {
         const res = await put('/promotions/update', { promotion })
-        return res.data ? res.data : false
+        if (res.data) {
+            await dispatch(updatePromo(promotion))
+            return true
+        }
+        return false
     } catch (err) {
         alert(JSON.stringify(err))
     }

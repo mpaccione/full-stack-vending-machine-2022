@@ -40,7 +40,7 @@ const getPromotions = async (req, res) => {
 
 const updatePromotion = async (req, res) => {
     try {
-        const { discount, endDate, startDate } = req.body
+        const { discount, endDate, promotionId, startDate } = req.body.promotion
         const updatedPromotion = await Promotions.update({ discount, endDate, startDate }, { where: { promotionId } })
         res.status(200).json(updatedPromotion)
     } catch (err) {

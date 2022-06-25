@@ -24,17 +24,20 @@ const AddRow = () => {
 
   const onChange = (key, val) => {
     const copyNewRow = JSON.parse(JSON.stringify(newRow));
+    console.log({ val })
 
     if (key === "image" && val) {
       const reader = new FileReader();
       reader.onload = function (e) {
-        copyNewRow["image"] = btoa(e.target.result);
+        console.log(e)
+        console.log(e.target.result)
+        copyNewRow["image"] = e.target.result;
         setNewRow(copyNewRow);
       };
       reader.onerror = function (err) {
         alert(JSON.stringify(err));
       };
-      reader.readAsBinaryString(val);
+      reader.readAsDataURL(val[0]);
     } else {
       copyNewRow[key] = val;
       setNewRow(copyNewRow);
@@ -58,17 +61,17 @@ const AddRow = () => {
         <TextArea
           onChange={(e) => onChange("description", e.target.value)}
           placeholder="Description"
-          value={newRow?.name}
+          value={newRow?.description}
         />
         <Input
           onChange={(e) => onChange("currentInventory", e.target.value)}
           placeholder="Current Inventory"
-          value={newRow?.name}
+          value={newRow?.currentInventory}
         />
         <Input
           onChange={(e) => onChange("maximumInventory", e.target.value)}
           placeholder="Maximum Inventory"
-          value={newRow?.name}
+          value={newRow?.maximumInventory}
         />
         <Input
           onChange={(e) => onChange("image", e.target.files)}
@@ -77,7 +80,8 @@ const AddRow = () => {
         <StyledIcon
           name="save"
           onClick={() => {
-            dispatch(createProduct(newRow));
+            const res = dispatch(createProduct(newRow));
+            res && setNewRow({})
           }}
           style={{ marginLeft: "15px" }}
         />

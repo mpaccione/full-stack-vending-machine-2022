@@ -58,35 +58,35 @@ const EditableProductRow = ({ soda }) => {
       <TableCell>{productId}</TableCell>
       <TableCell>
         <Input
-          disabled={editing}
+          disabled={editing === 0 ? false : true}
           onChange={(e) => onChange("name", e.target.value)}
           value={name}
         />
       </TableCell>
       <TableCell>
         <Input
-          disabled={editing}
+          disabled={editing === 0 ? false : true}
           onChange={(e) => onChange("price", e.target.value)}
           value={price}
         />
       </TableCell>
       <TableCell>
         <TextArea
-          disabled={editing}
+          disabled={editing === 0 ? false : true}
           onChange={(e) => onChange("description", e.target.value)}
           value={description}
         />
       </TableCell>
       <TableCell>
         <Input
-          disabled={editing}
+          disabled={editing === 0 ? false : true}
           onChange={(e) => onChange("currentInventory", e.target.value)}
           value={currentInventory}
         />
       </TableCell>
       <TableCell>
         <Input
-          disabled={editing}
+          disabled={editing === 0 ? false : true}
           onChange={(e) => onChange("maximumInventory", e.target.value)}
           value={maximumInventory}
         />

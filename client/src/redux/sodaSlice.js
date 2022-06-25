@@ -13,7 +13,7 @@ const sodaSlice = createSlice({
   initialState: initialState,
   reducers: {
     addPromo: (state, action) => {
-      // admin - adding of promotion
+      // admin - adding of promotion (sorted)
       const promotionsCopy = JSON.parse(JSON.stringify(state.allPromotions))
       promotionsCopy.push(action.payload)
       promotionsCopy.sort((a, b) => Date(a.createdAt) - Date(b.createdAt))
@@ -23,6 +23,9 @@ const sodaSlice = createSlice({
       if (now > action.payload.startDate && now < action.payload.endDate) {
         state.currentPromotions[action.payload.productId] = action.payload
       }
+    },
+    addSoda: (state, action) => {
+      state.sodas.push(action.payload)
     },
     deletePromo: (state, action) => {
       // admin - deletion of promotion - all and current
@@ -34,7 +37,7 @@ const sodaSlice = createSlice({
         allPromotionsCopy.splice(allIdx, 1)
         state.allPromotions = allPromotionsCopy
       }
-      
+
       if (Object.keys(state.currentPromotions).length > 0) {
         const currentPromotionObj = Object.values(state.currentPromotions).find(s => s.promotionId === action.payload)
 
@@ -84,11 +87,38 @@ const sodaSlice = createSlice({
       // admin + user
       state.sodas = action.payload
     },
+    updateSoda: (state, action) => {
+      // admin
+      const sodaCopy = JSON.parse(JSON.stringify(state.sodas))
+      const idx = sodaCopy.findIndex(s => s.productId === action.payload.productId)
+      if (idx !== -1) {
+        sodaCopy[idx] = action.payload
+        state.sodas = sodaCopy
+      }
+    },
+    updatePromo: (state, action) => {
+      // admin - updates all and current promotions
+      const allPromotionsCopy = JSON.parse(JSON.stringify(state.allPromotions))
+      const idx = allPromotionsCopy.findIndex(p => p.promotionId === action.payload.promotionId)
+      console.log({ action: action.payload, idx })
+      if (idx !== -1) {
+        allPromotionsCopy[idx] = action.payload
+        state.allPromotions = allPromotionsCopy
+      }
+
+      if (Object.keys(state.currentPromotions).length > 0) {
+        // current promotions are productId indexed key vals
+        const currentPromotionsCopy = JSON.parse(JSON.stringify(state.currentPromotions))
+        delete currentPromotionsCopy[action.payload.productId]
+        state.currentPromotions = currentPromotionsCopy
+      }
+    }
   },
 });
 
 export const {
   addPromo,
+  addSoda,
   deletePromo,
   deleteSoda,
   dispenseSoda,
@@ -96,5 +126,7 @@ export const {
   setCurrentPromotions,
   setSelectedId,
   setSodas,
+  updateSoda,
+  updatePromo
 } = sodaSlice.actions;
 export default sodaSlice.reducer;
